@@ -22,15 +22,16 @@ export const useCharacterStore = defineStore('characters', () => {
 
   function setStatusFilter(status: string) {
     statusFilter.value = status
-    getCharacters()
   }
   function setGenderFilter(gender: string) {
     genderFilter.value = gender
-    getCharacters()
   }
   function setSpeciesFilter(species: string) {
     speciesFilter.value = species
-    getCharacters()
+  }
+
+  function setSearchQuery(query: string) {
+    searchQuery.value = query
   }
 
   async function getCharacters(page: number | null = 1) {
@@ -48,10 +49,14 @@ export const useCharacterStore = defineStore('characters', () => {
       if (data.value.info.prev) {
         const prev = getQueryParamValue(data.value.info.prev, 'page')
         previousPage.value = prev ? +prev : null
+      } else {
+        previousPage.value = null
       }
       if (data.value.info.next) {
         const next = getQueryParamValue(data.value.info.next, 'page')
         nextPage.value = next ? +next : null
+      } else {
+        nextPage.value = null
       }
     } catch (e: any) {
       error.value = e.response.data.error
@@ -85,6 +90,7 @@ export const useCharacterStore = defineStore('characters', () => {
     setStatusFilter,
     setGenderFilter,
     setSpeciesFilter,
+    setSearchQuery,
     getCharacters,
     getCharacter,
   }

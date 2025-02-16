@@ -3,13 +3,15 @@ import {onMounted, computed, watch} from "vue";
 import SearchFilters from "@/components/SearchFilters.vue";
 import {useCharacterStore} from "@/stores/characters.ts";
 import {storeToRefs} from "pinia";
+import SearchBar from "@/components/SearchBar.vue";
 const store = useCharacterStore()
-const { loading, data, previousPage, nextPage, statusFilter, speciesFilter, genderFilter} = storeToRefs(store);
+const { loading, data, error, previousPage, nextPage, statusFilter, speciesFilter, genderFilter, searchQuery} = storeToRefs(store);
 
 const filters = computed(() => ({
   status: statusFilter.value,
   species: speciesFilter.value,
   gender: genderFilter.value,
+  name: searchQuery.value
 }))
 
 watch(filters, () => {
@@ -22,23 +24,31 @@ onMounted(async () => {
 })
 </script>
 <template>
-  <div>
-    <h1>Search View</h1>
-    <SearchFilters />
-    <ul v-if="data">
-      <li v-for="character in data.results" :key="character.id">
-        <RouterLink :to="`/character/${character.id}`">
-          <img :src="character.image" class="w-32 h-32 rounded-full" :alt="`${character.name}'s picture`" />
+  <div class="py-10">
+    <h1 class="text-4xl md:text-6xl xl:text-8xl font-bold text-center shadow-2xl text-shadow-slate-200/50">Rick-and-Morty-Pedia</h1>
+    <div class="flex flex-col my-4">
+      <SearchBar />
+      <SearchFilters />
+    </div>
+    <div v-if="loading" class="flex flex-col items-center justify-center">
+      LOADING...
+    </div>
+    <div v-else-if="error" class="flex flex-col items-center justify-center text-4xl font-bold">
+      {{ error }}
+    </div>
+    <div v-else-if="data" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+        <RouterLink :to="`/character/${character.id}`" class="flex flex-1 flex-row items-center w-full rounded-full bg-[#02b5cc] p-2 hover:scale-105 transition-all transition-duration-300" v-for="character in data.results" :key="character.id">
+          <img :src="character.image" class=" border-8 border-[#b2df28] w-32 h-32 rounded-full shadow-md" :alt="`${character.name}'s picture`" />
           <div class="ml-2">
-            <h2>{{ character.name }}</h2>
+            <h2 class="text-xl font-bold">{{ character.name }}</h2>
+            <p class="text-sm">{{ character.species }}</p>
             <p>{{ character.status }}</p>
           </div>
         </RouterLink>
-      </li>
-    </ul>
-    <div class="flex flex-row justify-between">
-      <button @click="store.getCharacters(previousPage)" class="rounded-full bg-slate-600 p-2 m-2" :disabled="!previousPage">Précédent</button>
-      <button @click="store.getCharacters(nextPage)" class="rounded-full bg-slate-600 p-2 m-2" :disabled="!nextPage">Suivant</button>
+    </div>
+    <div class="flex flex-row justify-between mt-8">
+      <button @click="store.getCharacters(previousPage)" class="rounded-full bg-[#b2df28] p-4 m-2 text-black text-lg font-bold w-1/2 disabled:opacity-50  shadow-[0px_1px_inset_#fff] disabled:shadow-none" :disabled="!previousPage">Précédent</button>
+      <button @click="store.getCharacters(nextPage)" class="rounded-full bg-[#b2df28] p-4 m-2 text-black text-lg font-bold w-1/2 disabled:opacity-50  shadow-[0px_1px_inset_#fff] disabled:shadow-none" :disabled="!nextPage">Suivant</button>
     </div>
   </div>
 </template>
