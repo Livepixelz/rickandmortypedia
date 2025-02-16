@@ -6,23 +6,20 @@ import type { Character, ApiSearchResponse, Filters } from "@/types";
 export class CharacterService {
     static async getCharacters(searchQuery: string,
                          filters: Filters = {}): Promise<ApiSearchResponse> {
-        const response = await axios.get<ApiSearchResponse>(`${API_BASE_URL}/character`, {
-            params: {
-                name: searchQuery,
-                status: filters.status,
-                species: filters.species,
-                gender: filters.gender,
-            },
-        });
+
+        let queryString = `?name=${searchQuery}`;
+        for (const [key, value] of Object.entries(filters)) {
+            if (value) {
+                queryString += `&${key}=${value}`;
+            }
+        }
+
+        const response = await axios.get<ApiSearchResponse>(`${API_BASE_URL}/character/${queryString}`);
         return response.data;
     }
 
     static async getCharacter(id: number): Promise<Character> {
-        return axios.get<Character>(`${API_BASE_URL}/character/${id}`).then(async res => {
-            return res.data;
-        });
+        const response = await axios.get<Character>(`${API_BASE_URL}/character/${id}`);
+        return response.data;
     }
-}
-
-export class type {
 }
