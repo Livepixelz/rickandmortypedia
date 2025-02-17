@@ -10,7 +10,7 @@ const { setGenderFilter, setSpeciesFilter, setStatusFilter } = useCharacterStore
     <ul class="flex flex-row py-4">
       <li class="text-center md:text-left">
         <label for="status" class="text-white font-bold text-lg">Status:</label>
-        <select name="status" class="cursor-pointer rounded-full bg-[#b2df28] hover:bg-slate-500 transition-all transition-duration-300 p-4 m-2 text-black  font-bold text-lg shadow-[0px_1px_inset_#fff]" id="status" :value="statusFilter" @change="setStatusFilter($event.target.value)">
+        <select name="status" class="cursor-pointer rounded-full bg-[#b2df28] hover:bg-[#02b5cc] transition-all transition-duration-300 p-4 m-2 text-black  font-bold text-lg shadow-[0px_1px_inset_#fff]" id="status" :value="statusFilter" @change="setStatusFilter($event.target.value)">
           <option value="">All</option>
           <option value="alive">Alive</option>
           <option value="dead">Dead</option>
@@ -18,7 +18,7 @@ const { setGenderFilter, setSpeciesFilter, setStatusFilter } = useCharacterStore
       </li>
       <li class="text-center md:text-left">
         <label for="species" class="text-white font-bold text-lg">Species:</label>
-        <select name="species" class="cursor-pointer rounded-full bg-[#b2df28] hover:bg-slate-500 transition-all transition-duration-300 p-4 m-2 text-black  font-bold text-lg shadow-[0px_1px_inset_#fff]" id="species" :value="speciesFilter" @change="setSpeciesFilter($event.target.value)">
+        <select name="species" class="cursor-pointer rounded-full bg-[#b2df28] hover:bg-[#02b5cc] transition-all transition-duration-300 p-4 m-2 text-black  font-bold text-lg shadow-[0px_1px_inset_#fff]" id="species" :value="speciesFilter" @change="setSpeciesFilter($event.target.value)">
           <option value="">All</option>
           <option value="human">Human</option>
           <option value="alien">Alien</option>
@@ -27,7 +27,7 @@ const { setGenderFilter, setSpeciesFilter, setStatusFilter } = useCharacterStore
       </li>
       <li class="text-center md:text-left">
         <label for="gender" class="text-white font-bold text-lg">Gender:</label>
-        <select name="gender" class="cursor-pointer rounded-full bg-[#b2df28] hover:bg-slate-500 transition-all transition-duration-300 p-4 m-2 text-black font-bold text-lg shadow-[0px_1px_inset_#fff]" id="gender" :value="genderFilter" @change="setGenderFilter($event.target.value)">
+        <select name="gender" class="cursor-pointer rounded-full bg-[#b2df28] hover:bg-[#02b5cc] transition-all transition-duration-300 p-4 m-2 text-black font-bold text-lg shadow-[0px_1px_inset_#fff]" id="gender" :value="genderFilter" @change="setGenderFilter($event.target.value)">
           <option value="">All</option>
           <option value="male">Male</option>
           <option value="female">Female</option>
