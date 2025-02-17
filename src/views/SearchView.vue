@@ -38,7 +38,7 @@ onMounted(async () => {
     <div v-else-if="error" class="flex flex-col items-center justify-center text-4xl font-bold">
       {{ error }}
     </div>
-    <div v-else-if="data" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+    <div v-else-if="data" class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
         <RouterLink :to="`/character/${character.id}`" v-for="character in data.results" :key="character.id">
           <CharacterCard :character="character" />
         </RouterLink>
