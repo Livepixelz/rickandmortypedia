@@ -11,6 +11,7 @@ function getQueryParamValue(url: string, key: string) {
 export const useCharacterStore = defineStore('characters', () => {
   const data = ref<ApiSearchResponse|null>(null)
   const previousPage = ref<number|null>(null)
+  const currentPage = ref<number|null>(null)
   const nextPage = ref<number|null>(null)
   const character = ref<Character|null>(null)
   const loading = ref(false)
@@ -33,17 +34,23 @@ export const useCharacterStore = defineStore('characters', () => {
   function setSearchQuery(query: string) {
     searchQuery.value = query
   }
+  function setCurrentPage(page: number) {
+    currentPage.value = page
+  }
 
-  async function getCharacters(page: number | null = 1) {
+  async function getCharacters(page?: number | null) {
     loading.value = true
     error.value = null
+    if (!page && currentPage.value) {
+      page = currentPage.value
+    }
     const filters = {
       status: statusFilter.value,
       gender: genderFilter.value,
       species: speciesFilter.value,
       page,
     }
-
+    currentPage.value = page ?? null
     try {
       data.value = await CharacterService.getCharacters(searchQuery.value, filters)
       if (data.value.info.prev) {
@@ -79,6 +86,7 @@ export const useCharacterStore = defineStore('characters', () => {
   return {
     data,
     previousPage,
+    currentPage,
     nextPage,
     character,
     loading,
@@ -91,6 +99,7 @@ export const useCharacterStore = defineStore('characters', () => {
     setGenderFilter,
     setSpeciesFilter,
     setSearchQuery,
+    setCurrentPage,
     getCharacters,
     getCharacter,
   }
