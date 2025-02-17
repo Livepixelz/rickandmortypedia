@@ -2,7 +2,7 @@
 import { useCharacterStore } from "@/stores/characters";
 import {storeToRefs} from "pinia";
 const { statusFilter, speciesFilter, genderFilter} = storeToRefs(useCharacterStore());
-const { setGenderFilter, setSpeciesFilter, setStatusFilter } = useCharacterStore();
+const { setGenderFilter, setSpeciesFilter, setStatusFilter, resetSearch } = useCharacterStore();
 </script>
 
 <template>
@@ -34,6 +34,9 @@ const { setGenderFilter, setSpeciesFilter, setStatusFilter } = useCharacterStore
           <option value="genderless">Genderless</option>
           <option value="unknown">Unknown</option>
         </select>
+      </li>
+      <li>
+        <button @click="resetSearch()" class="p-4 m-2 mx-0 text-lg font-bold disabled:opacity-50 disabled:shadow-none"> Reset &cross;</button>
       </li>
     </ul>
   </div>

@@ -38,6 +38,14 @@ export const useCharacterStore = defineStore('characters', () => {
     currentPage.value = page
   }
 
+  function resetSearch() {
+    searchQuery.value = ''
+    statusFilter.value = ''
+    speciesFilter.value = ''
+    genderFilter.value = ''
+    currentPage.value = null
+  }
+
   async function getCharacters(page?: number | null) {
     loading.value = true
     error.value = null
@@ -67,6 +75,8 @@ export const useCharacterStore = defineStore('characters', () => {
       }
     } catch (e: any) {
       error.value = e.response.data.error
+      previousPage.value = null
+      nextPage.value = null
     } finally {
       loading.value = false
     }
@@ -99,6 +109,7 @@ export const useCharacterStore = defineStore('characters', () => {
     setGenderFilter,
     setSpeciesFilter,
     setSearchQuery,
+    resetSearch,
     setCurrentPage,
     getCharacters,
     getCharacter,
