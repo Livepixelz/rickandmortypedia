@@ -44,8 +44,8 @@ onMounted(async () => {
         </RouterLink>
     </div>
     <div class="flex flex-row justify-between mt-8">
-      <button @click="store.getCharacters(previousPage)" class="rounded-full bg-[#b2df28] p-4 m-2 text-black text-lg font-bold w-1/2 disabled:opacity-50  shadow-[0px_1px_inset_#fff] disabled:shadow-none" :disabled="!previousPage">Précédent</button>
-      <button @click="store.getCharacters(nextPage)" class="rounded-full bg-[#b2df28] p-4 m-2 text-black text-lg font-bold w-1/2 disabled:opacity-50  shadow-[0px_1px_inset_#fff] disabled:shadow-none" :disabled="!nextPage">Suivant</button>
+      <button @click="store.getCharacters(previousPage)" class="rounded-full bg-[#b2df28] p-4 m-2 text-black text-lg font-bold w-1/2 disabled:opacity-50  shadow-[0px_1px_inset_#fff] disabled:shadow-none hover:-translate-y-1 transition-all active:translate-y-0" :disabled="!previousPage">Précédent</button>
+      <button @click="store.getCharacters(nextPage)" class="rounded-full bg-[#b2df28] p-4 m-2 text-black text-lg font-bold w-1/2 disabled:opacity-50  shadow-[0px_1px_inset_#fff] disabled:shadow-none hover:-translate-y-1 transition-all active:translate-y-0" :disabled="!nextPage">Suivant</button>
     </div>
   </div>
 </template>

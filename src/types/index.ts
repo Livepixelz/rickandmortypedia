@@ -5,11 +5,24 @@ export interface Character {
     species: string;
     type: string;
     gender: string;
-    origin: string;
+    origin: Origin;
+    location: Location;
     image: string;
-    episode: string;
+    episode: string[];
+    url: string;
+    created: Date;
+}
+
+export interface Location {
+    name: string;
     url: string;
 }
+
+export interface Origin {
+    name: string;
+    url: string;
+}
+
 
 export interface ApiSearchResponse {
     results: Character[];
