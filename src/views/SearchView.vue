@@ -4,6 +4,7 @@ import SearchFilters from "@/components/SearchFilters.vue";
 import {useCharacterStore} from "@/stores/characters.ts";
 import {storeToRefs} from "pinia";
 import SearchBar from "@/components/SearchBar.vue";
+import CharacterCard from "@/components/CharacterCard.vue";
 const store = useCharacterStore()
 const { loading, data, error, previousPage, nextPage, statusFilter, speciesFilter, genderFilter, searchQuery} = storeToRefs(store);
 
@@ -15,6 +16,7 @@ const filters = computed(() => ({
 }))
 
 watch(filters, () => {
+  store.setCurrentPage(1)
   store.getCharacters()
 })
 
@@ -24,26 +26,21 @@ onMounted(async () => {
 })
 </script>
 <template>
-  <div class="py-10">
-    <h1 class="text-4xl md:text-6xl xl:text-8xl font-bold text-center shadow-2xl text-shadow-slate-200/50">Rick-and-Morty-Pedia</h1>
+  <div>
+    <h1 class="text-4xl font-bold text-center shadow-2xl text-shadow-slate-200/50 -mt-16">Pedia</h1>
     <div class="flex flex-col my-4">
       <SearchBar />
       <SearchFilters />
     </div>
-    <div v-if="loading" class="flex flex-col items-center justify-center">
+    <div v-if="loading" class="flex flex-col items-center justify-center h-56 text-4xl font-bold">
       LOADING...
     </div>
     <div v-else-if="error" class="flex flex-col items-center justify-center text-4xl font-bold">
       {{ error }}
     </div>
     <div v-else-if="data" class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-        <RouterLink :to="`/character/${character.id}`" class="flex flex-1 flex-row items-center w-full rounded-full bg-[#02b5cc] p-2 hover:scale-105 transition-all transition-duration-300" v-for="character in data.results" :key="character.id">
-          <img :src="character.image" class=" border-8 border-[#b2df28] w-32 h-32 rounded-full shadow-md" :alt="`${character.name}'s picture`" />
-          <div class="ml-2">
-            <h2 class="text-xl font-bold">{{ character.name }}</h2>
-            <p class="text-sm">{{ character.species }}</p>
-            <p>{{ character.status }}</p>
-          </div>
+        <RouterLink :to="`/character/${character.id}`" v-for="character in data.results" :key="character.id">
+          <CharacterCard :character="character" />
         </RouterLink>
     </div>
     <div class="flex flex-row justify-between mt-8">

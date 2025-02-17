@@ -4,6 +4,9 @@ import { RouterView } from 'vue-router'
 
 <template>
   <main class="container mx-auto p-8">
+    <header class="flex items-center justify-center">
+      <img src="/logo.png" alt="Rick and Morty pedia" class="h-56" />
+    </header>
     <RouterView v-slot:default="{ Component }">
       <transition
           enter-active-class="duration-300 ease-out"
